@@ -12,6 +12,15 @@ extern keymap_config_t keymap_config;
 #define KC_MYALT MT(MOD_RALT, KC_ENT)
 #define KC_MYSFT MT(MOD_RSFT, KC_ENT)
 
+/* TODOS:
+ * Decide on shift
+ * Decide on backspace
+ * Fix fn layer
+ * Fix movement keys
+ * Flash eeprom
+ * Look at swap hands https://github.com/qmk/qmk_firmware/blob/master/docs/feature_swap_hands.md
+ * Try out mousekeys
+ */
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   FN,
@@ -47,17 +56,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.   ,-----------------------------------------.
  * |   `  |   !  |   @  |   {  |   }  |   &  |   |   :  |   7  |   8  |   9  |   +  | RESET|
  * |------+------+------+------+------+-------   |------+------+------+------+------+------|
- * |   ~  |   #  |   %  |   (  |   )  |   =  |   |   ;  |   4  |   5  |   6  |   -  |   *  |
+ * |   ~  |   ^  |   $  |   (  |   )  |   =  |   |   ;  |   4  |   5  |   6  |   -  |   *  |
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
- * |      |   ^  |   $  |   [  |   ]  |   _  |   |   '  |   1  |   2  |   3  |   \  |   |  |
+ * |      |   #  |   %  |   [  |   ]  |   _  |   |   '  |   1  |   2  |   3  |   \  |   |  |
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
  * |      |      |      |      |      |      |   |   "  |      |   0  |   ,  |      |      |
  * `-----------------------------------------'   `-----------------------------------------'
  */
 [_FN] = LAYOUT_ortho_4x12( \
-   KC_GRV, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_AMPR, KC_COLN,    KC_7, KC_8,    KC_9, KC_PLUS,   RESET, \
-  KC_TILD, KC_HASH, KC_PERC, KC_LPRN, KC_RPRN,  KC_EQL, KC_SCLN,    KC_4, KC_5,    KC_6, KC_MINS, KC_ASTR, \
-  _______, KC_CIRC, KC_DLR,  KC_LBRC, KC_RBRC, KC_UNDS, KC_QUOT,    KC_1, KC_2,    KC_3, KC_BSLS, KC_PIPE, \
+   KC_GRV, KC_EXLM,  KC_AT,   KC_LCBR, KC_RCBR, KC_AMPR, KC_COLN,    KC_7, KC_8,    KC_9, KC_PLUS,   RESET, \
+  KC_TILD, KC_CIRC,  KC_DLR, KC_LPRN, KC_RPRN,  KC_EQL, KC_SCLN,    KC_4, KC_5,    KC_6, KC_MINS, KC_ASTR, \
+  _______, KC_HASH, KC_PERC,  KC_LBRC, KC_RBRC, KC_UNDS, KC_QUOT,    KC_1, KC_2,    KC_3, KC_BSLS, KC_PIPE, \
   _______, _______, _______, _______, _______, _______, KC_DQUO, _______, KC_0, KC_COMM, _______, _______  \
 ),
 
