@@ -119,7 +119,34 @@ void persistent_default_layer_set(uint16_t default_layer) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  uint8_t gui_pressed = get_mods() & ((MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI)));
   switch (keycode) {
+    case KC_K:
+      if (gui_pressed) {
+        if (record->event.pressed) {
+          register_code(KC_UP);
+        } else {
+          unregister_code(KC_UP);
+        }
+        return false;
+      }
+      return true;
+
+      // if (record->event.pressed) {
+      //   // if ((keyboard_report->mods & MOD_BIT (KC_LGUI)) || (keyboard_report->mods & MOD_BIT (KC_RGUI))) {
+      //   if (get_mods() & MODS_GUI_MASK) {
+      //     register_code(KC_UP);
+      //   } else {
+      //     register_code(KC_K);
+      //   }
+      // } else {
+      //   // if ((keyboard_report->mods & MOD_BIT (KC_LGUI)) || (keyboard_report->mods & MOD_BIT (KC_RGUI))) {
+      //   if (get_mods() & MODS_GUI_MASK) {
+      //     unregister_code(KC_K);
+      //   } else {
+      //     unregister_code(KC_K);
+      //   }
+      // }
     case QWERTY:
       if (record->event.pressed) {
         persistent_default_layer_set(1UL<<_QWERTY);
