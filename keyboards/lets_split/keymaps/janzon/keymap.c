@@ -118,35 +118,70 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
+// This variable manually keeps track of whether alt is pressed or not
+bool lisinges_variable = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  uint8_t gui_pressed = get_mods() & ((MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI)));
   switch (keycode) {
-    case KC_K:
-      if (gui_pressed) {
+    case KC_MYALT:
+      if (record->event.pressed) {
+        lisinges_variable = true;
+      } else {
+        lisinges_variable = false;
+      }
+      return true;
+    case KC_H:
+      if (lisinges_variable) {
         if (record->event.pressed) {
-          register_code(KC_UP);
+          unregister_code(KC_RALT);
+          register_code(KC_LEFT);
         } else {
-          unregister_code(KC_UP);
+          unregister_code(KC_LEFT);
+          register_code(KC_RALT);
         }
         return false;
       }
+      unregister_code(KC_LEFT);
       return true;
-
-      // if (record->event.pressed) {
-      //   // if ((keyboard_report->mods & MOD_BIT (KC_LGUI)) || (keyboard_report->mods & MOD_BIT (KC_RGUI))) {
-      //   if (get_mods() & MODS_GUI_MASK) {
-      //     register_code(KC_UP);
-      //   } else {
-      //     register_code(KC_K);
-      //   }
-      // } else {
-      //   // if ((keyboard_report->mods & MOD_BIT (KC_LGUI)) || (keyboard_report->mods & MOD_BIT (KC_RGUI))) {
-      //   if (get_mods() & MODS_GUI_MASK) {
-      //     unregister_code(KC_K);
-      //   } else {
-      //     unregister_code(KC_K);
-      //   }
-      // }
+    case KC_J:
+      if (lisinges_variable) {
+        if (record->event.pressed) {
+          unregister_code(KC_RALT);
+          register_code(KC_DOWN);
+        } else {
+          unregister_code(KC_DOWN);
+          register_code(KC_RALT);
+        }
+        return false;
+      }
+      unregister_code(KC_DOWN);
+      return true;
+    case KC_K:
+      if (lisinges_variable) {
+        if (record->event.pressed) {
+          unregister_code(KC_RALT);
+          register_code(KC_UP);
+        } else {
+          unregister_code(KC_UP);
+          register_code(KC_RALT);
+        }
+        return false;
+      }
+      unregister_code(KC_UP);
+      return true;
+    case KC_L:
+      if (lisinges_variable) {
+        if (record->event.pressed) {
+          unregister_code(KC_RALT);
+          register_code(KC_RIGHT);
+        } else {
+          unregister_code(KC_RIGHT);
+          register_code(KC_RALT);
+        }
+        return false;
+      }
+      unregister_code(KC_RIGHT);
+      return true;
     case QWERTY:
       if (record->event.pressed) {
         persistent_default_layer_set(1UL<<_QWERTY);
