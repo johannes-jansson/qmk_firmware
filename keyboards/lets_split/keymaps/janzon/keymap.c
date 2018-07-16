@@ -28,6 +28,9 @@ extern keymap_config_t keymap_config;
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   FN,
+  UC_AUML,
+  UC_OUML,
+  UC_ARING,
 };
 
 // Fillers to make layering more clear
@@ -49,11 +52,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_QWERTY] = LAYOUT_ortho_4x12(
-    KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,      KC_P, KC_SWLBRC, \
-    KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,        KC_H,      KC_J,    KC_K,    KC_L, KC_SWSCLN, KC_SWQUOT, \
-   KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,   KC_SLSH,   KC_BSPC, \
-   KC_LSFT, KC_LSFT, KC_LSFT, KC_LGUI,      FN, KC_LSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,   KC_RSFT,   KC_RSFT  \
+    KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,     KC_P, UC_ARING, \
+    KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  UC_OUML,  UC_AUML, \
+   KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,  KC_SLSH,  KC_BSPC, \
+   KC_LSFT, KC_LSFT, KC_LSFT, KC_LGUI,      FN, KC_LSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
 ),
+// #define KC_SWLBRC UC(0x00E5)
 
 /* Fn
  * ,-----------------------------------------.   ,-----------------------------------------.
@@ -75,13 +79,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Game
  * ,-----------------------------------------.   ,-----------------------------------------.
- * | Esc  |   1  |   2  |   3  |   4  |   5  |   |QWERTY|   U  |   I  |   O  |   P  |  Å   |
+ * | Esc  |   1  |   2  |   3  |   4  |   5  |   |QWERTY|      |      |      |      |      |
  * |------+------+------+------+------+-------   |------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   |   H  |   J  |   K  |   L  |   Ö  |  Ä   |
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   |      |      |      |      |      |      |
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
- * | Shift|   A  |   S  |   D  |   F  |   G  |   |   N  |   M  |   ,  |   .  |   /  | Shift|
+ * | Shift|   A  |   S  |   D  |   F  |   G  |   |      |      |      |      |      |      |
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
- * | Ctrl |   Z  |   X  |   C  |   V  | Space|   | Space| Alt  | CMD  |      |      |      |
+ * | Ctrl |   Z  |   X  |   C  |   V  | Space|   |      |      |      |      |      |      |
  * `-----------------------------------------'   `-----------------------------------------'
  */
 
@@ -122,6 +126,8 @@ void persistent_default_layer_set(uint16_t default_layer) {
 bool lisinges_variable = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  uint8_t shift_pressed = get_mods() & ((MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)));
+  // The following five cases map alt hjkl to arrow keys 
   switch (keycode) {
     case KC_MYALT:
       if (record->event.pressed) {
@@ -182,6 +188,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       unregister_code(KC_RIGHT);
       return true;
+    
+    // The following three cases handle Swedish letters
+    case UC_AUML:
+      if (shift_pressed) {
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT("00C4"));
+        }
+      } else {
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT("00E4"));
+        }
+      }
+      return false;
+      break;
+    case UC_OUML:
+      if (shift_pressed) {
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT("00D6"));
+        }
+      } else {
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT("00F6"));
+        }
+      }
+      return false;
+      break;
+    case UC_ARING:
+      if (shift_pressed) {
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT("00C5"));
+        }
+      } else {
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT("00E5"));
+        }
+      }
+      return false;
+      break;
+
+    // The following two cases handle layer switching
     case QWERTY:
       if (record->event.pressed) {
         persistent_default_layer_set(1UL<<_QWERTY);
