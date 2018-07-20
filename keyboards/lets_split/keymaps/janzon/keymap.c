@@ -17,14 +17,17 @@ extern keymap_config_t keymap_config;
 #define KC_GMESC LT(_GFN, KC_ESC)
 
 /* TODOS:
- * Decide on shift
- * Decide on backspace
- * Fix fn layer
- * Fix movement keys
- * Flash eeprom
- * Look at swap hands https://github.com/qmk/qmk_firmware/blob/master/docs/feature_swap_hands.md
- * Try out mousekeys
+ * [x] Decide on shift
+ * [x] Decide on backspace
+ * [x] Fix fn layer
+ * [x] Fix movement keys
+ * [x] Flash eeprom
+ * [x] Gaming layer
+ * [x] Gaming fn layer
+ * [ ] Look at swap hands https://github.com/qmk/qmk_firmware/blob/master/docs/feature_swap_hands.md
+ * [ ] Try out mousekeys
  */
+
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   FN,
@@ -44,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------   |------+------+------+------+------+------|
  * | Esc  |   A  |   S  |   D  |   F  |   G  |   |   H  |   J  |   K  |   L  |   Ö  |  Ä   |
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
- * | Ctrl |   Z  |   X  |   C  |   V  |   B  |   |   N  |   M  |   ,  |   .  |   /  |Bspace|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   |   N  |   M  |   ,  |   .  |   /  |Bspace|
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
  * | Shift| Shift| Shift|  CMD |  Fn  | Shift|   | Space| Alt  | Ctrl | Shift| Shift| Shift|
  * `-----------------------------------------'   `-----------------------------------------'
@@ -55,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,     KC_P, UC_ARING, \
     KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  UC_OUML,  UC_AUML, \
    KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,  KC_SLSH,  KC_BSPC, \
-   KC_LSFT, KC_LSFT, KC_LSFT, KC_LGUI,      FN, KC_LSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
+   KC_LSFT, KC_LSFT, KC_GRAVE, KC_LGUI,      FN, KC_LSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
 ),
 // #define KC_SWLBRC UC(0x00E5)
 
@@ -127,6 +130,7 @@ bool lisinges_variable = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   uint8_t shift_pressed = get_mods() & ((MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)));
+  uint8_t alt_pressed = get_mods() & ((MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT)));
   // The following five cases map alt hjkl to arrow keys 
   switch (keycode) {
     case KC_MYALT:
@@ -188,6 +192,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       unregister_code(KC_RIGHT);
       return true;
+
+    case KC_E:
+      if (alt_pressed) {
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT("00E9"));
+          return false;
+          break;
+        }
+      } 
+      return true;
+      break;
     
     // The following three cases handle Swedish letters
     case UC_AUML:
