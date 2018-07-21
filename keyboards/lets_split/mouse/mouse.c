@@ -1,4 +1,13 @@
-#include "lets_split.h"
+/**
+ * @Author: Chris James Champeau <semaj4712>
+ * @Date:   2017-01-09T13:14:08-08:00
+ * @Email:  semaj4712@gmail.com
+ * @Filename: champ40j.c
+ * @Last modified by:   semaj4712
+ * @Last modified time: 2018-07-05T15:03:13-07:00
+ */
+
+
 
 #include "mouse.h"
 #include "analog.c"
@@ -8,21 +17,24 @@
 #include "print.h"
 #include "report.h"
 #include "timer.h"
+#define INPUT_PULLUP 0x2
 
 // Joystick
 // Set Pins
 int xPin = 3; // VRx
-int yPin = B5; // VRy
-int swPin = F7; // SW
+int yPin = 2; // VRy
+int swPin = C4; // SW
 
 // Set Parameters
 int minAxisValue = 0;
 int maxAxisValue = 1023;
 
-int maxCursorSpeed = 1;
+int maxCursorSpeed = 4;
+int precisionSpeed = 1;
+int speedRegulator = 20; // Lower Values Create Faster Movement
 
-int xPolarity = 1;
-int yPolarity = -1;
+int xPolarity = -1;
+int yPolarity = 1;
 
 int cursorTimeout = 10;
 
@@ -64,13 +76,17 @@ int axisCoordinate(int pin, int origin) {
 
 int axisToMouseComponent(int pin, int origin, int maxSpeed, int polarity) {
   int coordinate = axisCoordinate(pin, origin);
-  print_decs(coordinate); println();
   if (coordinate == 0) {
     return 0;
   }
   else {
     float percent = (float)coordinate / 100;
-    return percent * maxCursorSpeed * polarity * (abs(coordinate)/6);
+    if (keyboard_report->mods & MOD_BIT(KC_LSFT)) {
+      return percent * precisionSpeed * polarity * (abs(coordinate)/speedRegulator);
+    }
+    else {
+      return percent * maxCursorSpeed * polarity * (abs(coordinate)/speedRegulator);
+    }
   }
 }
 
@@ -91,6 +107,7 @@ void pointing_device_task(void) {
 
   if (digitalRead(swPin) == 1) {
     report.buttons |= MOUSE_BTN1;
+    print("click\r\n");
   }
 
   pointing_device_set_report(report);
@@ -101,26 +118,4 @@ void matrix_init_kb(void) {
   timer_init();
   xOrigin = analogRead(xPin);
   yOrigin = analogRead(yPin);
-	matrix_init_user();
 }
-
-#ifdef SSD1306OLED
-void led_set_kb(uint8_t usb_led) {
-    // put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
-    led_set_user(usb_led);
-}
-#endif
-
-/* void matrix_init_kb(void) { */
-
-/*     // // green led on */
-/*     // DDRD |= (1<<5); */
-/*     // PORTD &= ~(1<<5); */
-
-/*     // // orange led on */
-/*     // DDRB |= (1<<0); */
-/*     // PORTB &= ~(1<<0); */
-
-/* 	matrix_init_user(); */
-/* }; */
-
