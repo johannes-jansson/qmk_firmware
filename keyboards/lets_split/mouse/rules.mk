@@ -1,6 +1,6 @@
 # MCU name
-MCU = at90usb1286
-BOOTLOADER = halfkay
+MCU = atmega32u4
+BOOTLOADER = caterina
 
 # Processor frequency.
 #     This will define a symbol, F_CPU, in all source code files equal to the
@@ -56,3 +56,5 @@ NKRO_ENABLE = yes		# USB Nkey Rollover - if this doesn't work, see here: https:/
 BACKLIGHT_ENABLE = no  # Enable keyboard backlight functionality
 AUDIO_ENABLE = yes
 RGBLIGHT_ENABLE = no
+
+LAYOUTS = ortho_4x12

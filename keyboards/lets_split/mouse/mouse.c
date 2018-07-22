@@ -9,6 +9,7 @@
 
 
 
+#include "lets_split.h"
 #include "mouse.h"
 #include "analog.c"
 #include "math.h"
@@ -21,8 +22,8 @@
 
 // Joystick
 // Set Pins
-int xPin = 3; // VRx
-int yPin = 2; // VRy
+int xPin = B6; // VRx
+int yPin = B5; // VRy
 int swPin = C4; // SW
 
 // Set Parameters
