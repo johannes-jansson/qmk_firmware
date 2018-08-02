@@ -3,3 +3,4 @@ ifndef QUANTUM_DIR
 endif
 
 UNICODE_ENABLE = yes
+AUDIO_ENABLE = yes

@@ -4,6 +4,7 @@ extern keymap_config_t keymap_config;
 
 #define _QWERTY 0
 #define _FN 3
+#define _SYS 4
 #define _GAME 5
 #define _GFN 6
 
@@ -14,6 +15,8 @@ extern keymap_config_t keymap_config;
 #define KC_MYCAPS MT(MOD_LCTL, KC_ESC)
 #define KC_MYALT MT(MOD_RALT, KC_ENT)
 #define KC_MYSFT MT(MOD_LSFT, KC_BSPC)
+#define KC_MYZERO MT(MOD_RCTL, KC_0)
+#define KC_MYTAB LT(_SYS, KC_TAB)
 #define KC_GMESC LT(_GFN, KC_ESC)
 
 /* TODOS:
@@ -24,6 +27,9 @@ extern keymap_config_t keymap_config;
  * [x] Flash eeprom
  * [x] Gaming layer
  * [x] Gaming fn layer
+ * [x] Volume and media keys
+ * [ ] Navigating words and lines
+ * [ ] Move SYS to tapdance thumb
  * [ ] Look at swap hands https://github.com/qmk/qmk_firmware/blob/master/docs/feature_swap_hands.md
  * [ ] Try out mousekeys
  */
@@ -31,6 +37,7 @@ extern keymap_config_t keymap_config;
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   FN,
+  SYS,
   UC_AUML,
   UC_OUML,
   UC_ARING,
@@ -47,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------   |------+------+------+------+------+------|
  * | Esc  |   A  |   S  |   D  |   F  |   G  |   |   H  |   J  |   K  |   L  |   Ö  |  Ä   |
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   |   N  |   M  |   ,  |   .  |   /  |Bspace|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   |   N  |   M  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
  * | Shift| Shift| Shift|  CMD |  Fn  | Shift|   | Space| Alt  | Ctrl | Shift| Shift| Shift|
  * `-----------------------------------------'   `-----------------------------------------'
@@ -56,10 +63,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_QWERTY] = LAYOUT_ortho_4x12(
-    KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,     KC_P, UC_ARING, \
-    KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  UC_OUML,  UC_AUML, \
-   KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,      KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,  KC_SLSH,  KC_BSPC, \
-   KC_LSFT, KC_LSFT, KC_GRAVE, KC_LGUI,      FN, KC_MYSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
+    KC_MYTAB,    KC_Q,    KC_W,    KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,     KC_P, UC_ARING, \
+      KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  UC_OUML,  UC_AUML, \
+     KC_RSFT,    KC_Z,    KC_X,    KC_C,    KC_V,      KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,  KC_SLSH,  KC_RSFT, \
+     KC_RSFT, KC_RSFT, KC_RSFT, KC_LGUI,      FN, KC_MYSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
 ),
 // #define KC_SWLBRC UC(0x00E5)
 
@@ -71,14 +78,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
  * |   |  |   #  |   %  |   [  |   ]  |   "  |   |   :  |   1  |   2  |   3  |   \  |      |
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
- * | RESET| Game |      |      |      |      |   |      |      |      |   0  |      |      |
+ * | RESET| Game |      |      |      |      |   |      |      |   0  |   0  |      |      |
  * `-----------------------------------------'   `-----------------------------------------'
  */
 [_FN] = LAYOUT_ortho_4x12( \
-     KC_GRV,   KC_EXLM,   KC_AT, KC_LCBR, KC_RCBR, KC_AMPR, KC_ASTR,    KC_7,    KC_8,    KC_9, KC_PLUS,  KC_EQL, \
-    KC_TILD,   KC_CIRC,  KC_DLR, KC_LPRN, KC_RPRN, KC_QUOT, KC_SCLN,    KC_4,    KC_5,    KC_6, KC_MINS, KC_UNDS, \
-    KC_PIPE,   KC_HASH, KC_PERC, KC_LBRC, KC_RBRC, KC_DQUO, KC_COLN,    KC_1,    KC_2,    KC_3, KC_BSLS, _______, \
-      RESET, TO(_GAME), _______, _______, _______, _______, _______, _______, _______,    KC_0, _______, _______  \
+     KC_GRV,   KC_EXLM,   KC_AT, KC_LCBR, KC_RCBR, KC_AMPR, KC_ASTR,    KC_7,      KC_8,    KC_9, KC_PLUS,  KC_EQL, \
+    KC_TILD,   KC_CIRC,  KC_DLR, KC_LPRN, KC_RPRN, KC_QUOT, KC_SCLN,    KC_4,      KC_5,    KC_6, KC_MINS, KC_UNDS, \
+    KC_PIPE,   KC_HASH, KC_PERC, KC_LBRC, KC_RBRC, KC_DQUO, KC_COLN,    KC_1,      KC_2,    KC_3, KC_BSLS, _______, \
+      RESET, TO(_GAME), _______, _______, _______, _______, _______, _______, KC_MYZERO,    KC_0, _______, _______  \
+),
+
+/* Sys
+ * ,-----------------------------------------.   ,-----------------------------------------.
+ * |  Tab |      |      |      |      |      |   |      |      |      |      |      |      |
+ * |------+------+------+------+------+-------   |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |   |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|   |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |   |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+   |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |   |      |      |      |      |      |      |
+ * `-----------------------------------------'   `-----------------------------------------'
+ */
+
+[_SYS] = LAYOUT_ortho_4x12(
+    KC_MYTAB, KC_VOLD, KC_MUTE, KC_VOLU, _______, _______,        _______, KC_MRWD, KC_MPLY, KC_MFFD, _______, _______, \
+   TO(_GAME), KC_MRWD, KC_MPLY, KC_MFFD, _______, _______,        KC_BTN1, KC_VOLD, KC_MUTE, KC_VOLU, _______, _______, \
+       RESET, _______, _______, _______, _______, _______,        KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2, _______, \
+     _______, _______, _______, _______, _______, _______,        KC_ACL0, KC_ACL1, KC_ACL2, _______, _______, _______ \
 ),
 
 /* Game
