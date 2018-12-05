@@ -119,4 +119,5 @@ void matrix_init_kb(void) {
   timer_init();
   xOrigin = analogRead(xPin);
   yOrigin = analogRead(yPin);
+	matrix_init_user();
 }
