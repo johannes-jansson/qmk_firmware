@@ -29,10 +29,11 @@ extern keymap_config_t keymap_config;
  * [x] Gaming layer
  * [x] Gaming fn layer
  * [x] Volume and media keys
+ * [x] Look at swap hands https://github.com/qmk/qmk_firmware/blob/master/docs/feature_swap_hands.md
+ * [x] Try out mousekeys
+ * [ ] Use ISO not unicode
  * [ ] Navigating words and lines
  * [ ] Move SYS to tapdance thumb
- * [ ] Look at swap hands https://github.com/qmk/qmk_firmware/blob/master/docs/feature_swap_hands.md
- * [ ] Try out mousekeys
  */
 
 enum custom_keycodes {
