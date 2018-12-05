@@ -44,9 +44,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING("fula ");
                 return false;
             case BAJS:
-                SEND_STRING("'t bajs ditt fula apskaft"SS_TAP(X_ENTER));
-                // SEND_STRING("'t bajs Adrian!"SS_DOWN(KC_LALT)SS_TAP(KC_TAB)SS_UP(KC_LALT));
-                // SEND_STRING(SS_DOWN(X_LALT)"as"SS_UP(X_LALT)SS_LGUI("k@london")"'t bajs Adrian!"SS_DOWN(X_LALT)SS_TAP(X_TAB)SS_UP(X_LALT));
+                SEND_STRING("Vid fr[gor r;rande ditt v[rdtillf'lle, var v'nlig kontakta medicinmottagningen p[ tel> 0451/296330. Vid ;vriga medicinska fr[gor b;r du i f;rsta hand v'nda dig till din v[rdcentral.");
                 return false;
         }
     }
