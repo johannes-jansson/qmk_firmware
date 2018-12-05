@@ -15,6 +15,7 @@ extern keymap_config_t keymap_config;
 #define KC_MYCAPS MT(MOD_LCTL, KC_ESC)
 #define KC_MYALT MT(MOD_RALT, KC_ENT)
 #define KC_MYSFT MT(MOD_LSFT, KC_BSPC)
+#define KC_MYFN LT(_FN, KC_TAB)
 #define KC_MYZERO MT(MOD_RCTL, KC_0)
 #define KC_MYTAB LT(_SYS, KC_TAB)
 #define KC_GMESC LT(_GFN, KC_ESC)
@@ -59,15 +60,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Shift| Shift| Shift|  CMD |  Fn  | Shift|   | Space| Alt  | Ctrl | Shift| Shift| Shift|
  * `-----------------------------------------'   `-----------------------------------------'
  *  alt acts as enter when tapped
+ *  fn acts as tab when tapped
  *  middle shift acts as backspace when tapped
- *  , . / becomes < > ? when shift is pressed, as usual
+ *  , . / becomes < > ? when shift is pressed, as usual with ANSI
  */
 
 [_QWERTY] = LAYOUT_ortho_4x12(
     KC_MYTAB,    KC_Q,    KC_W,    KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,     KC_P, UC_ARING, \
       KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  UC_OUML,  UC_AUML, \
      KC_RSFT,    KC_Z,    KC_X,    KC_C,    KC_V,      KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,  KC_SLSH,  KC_RSFT, \
-      SH_MON, KC_RSFT, KC_RSFT, KC_LGUI,      FN, KC_MYSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
+      SH_MON,   RESET, KC_RSFT, KC_LGUI, KC_MYFN, KC_MYSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
 ),
 // #define KC_SWLBRC UC(0x00E5)
 
