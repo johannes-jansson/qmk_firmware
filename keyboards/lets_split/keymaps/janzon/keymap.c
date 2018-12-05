@@ -19,6 +19,7 @@ extern keymap_config_t keymap_config;
 #define KC_MYZERO MT(MOD_RCTL, KC_0)
 #define KC_MYTAB LT(_SYS, KC_TAB)
 #define KC_GMESC LT(_GFN, KC_ESC)
+#define KC_ANSIKEY S(KC_7)
 
 /* TODOS:
  * [x] Decide on shift
@@ -69,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT_ortho_4x12(
     KC_MYTAB,    KC_Q,    KC_W,    KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,     KC_P, UC_ARING, \
       KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  UC_OUML,  UC_AUML, \
-     KC_RSFT,    KC_Z,    KC_X,    KC_C,    KC_V,      KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,  KC_SLSH,  KC_RSFT, \
+     KC_RSFT,    KC_Z,    KC_X,    KC_C,    KC_V,      KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,  KC_ANSIKEY,  KC_RSFT, \
       SH_MON,   RESET, KC_RSFT, KC_LGUI, KC_MYFN, KC_MYSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
 ),
 // #define KC_SWLBRC UC(0x00E5)
@@ -164,6 +165,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   uint8_t alt_pressed = get_mods() & ((MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT)));
   // The following five cases map alt hjkl to arrow keys 
   switch (keycode) {
+    case KC_ANSIKEY: {
+      if (record->event.pressed)
+        if(shift_pressed) {
+          register_code(KC_MINS);
+        } else {
+          register_code(KC_LSHIFT);
+          register_code(KC_7);
+          unregister_code(KC_LSHIFT);
+        }
+      else
+        if(shift_pressed) {
+          unregister_code(KC_MINS);
+        } else {
+          unregister_code(KC_7);
+        }
+      return false;
+    }
     case KC_MYALT:
       if (record->event.pressed) {
         lisinges_variable = true;
