@@ -19,7 +19,50 @@ extern keymap_config_t keymap_config;
 #define KC_MYZERO MT(MOD_RCTL, KC_0)
 #define KC_MYTAB LT(_SYS, KC_TAB)
 #define KC_GMESC LT(_GFN, KC_ESC)
-#define KC_ANSIKEY S(KC_7)
+
+#define KC_ARING KC_LBRC
+#define KC_OUML KC_SCLN
+#define KC_AUML KC_QUOT
+
+#define KC_SE_SLSH S(KC_7)
+#define KC_SE_AT LALT(KC_2) 
+#define KC_SE_AMPR S(KC_6)
+#define KC_SE_LPRN S(KC_8)
+#define KC_SE_RPRN S(KC_9)
+#define KC_SE_QUOT KC_BSLS
+#define KC_SE_DQUO S(KC_2)
+#define KC_SE_DLR LALT(KC_4)
+#define KC_SE_LCBR S(LALT(KC_8))
+#define KC_SE_RCBR S(LALT(KC_9))
+#define KC_SE_LBRC LALT(KC_8)
+#define KC_SE_RBRC LALT(KC_9)
+#define KC_SE_EQL S(KC_0)
+#define KC_SE_GBP LALT(KC_3)
+#define KC_SE_TILD LALT(KC_RBRC)
+#define KC_SE_EURO LALT(KC_E)
+#define KC_SE_AA KC_LBRC
+#define KC_SE_OE KC_SCLN
+#define KC_SE_AE KC_QUOT
+#define KC_SE_PLAYP KC_MEDIA_PLAY_PAUSE
+#define KC_SE_MUTE KC_AUDIO_MUTE
+#define KC_SE_CIRC KC_RCBR
+#define KC_SE_PARA KC_GRAVE
+#define KC_SE_HALF KC_TILD
+#define KC_SE_ACUT KC_EQL
+#define KC_SE_GRAV KC_PLUS
+#define KC_SE_MORE S(KC_NUBS)
+#define KC_SE_LESS KC_NUBS
+#define KC_SE_PLUS KC_MINS
+#define KC_SE_ASTR KC_PIPE
+#define KC_SE_QUES S(KC_MINS)
+#define KC_SE_BSLS S(LALT(KC_7))
+#define KC_SE_PIPE LALT(KC_7)
+#define KC_SE_SCLN S(KC_COMM)
+#define KC_SE_COLN S(KC_DOT)
+#define KC_SE_MINS KC_SLSH
+#define KC_SE_UNDS S(KC_SLSH)
+#define KC_SE_LT KC_NUBS
+#define KC_SE_GT S(KC_NUBS)
 
 /* TODOS:
  * [x] Decide on shift
@@ -32,7 +75,7 @@ extern keymap_config_t keymap_config;
  * [x] Volume and media keys
  * [x] Look at swap hands https://github.com/qmk/qmk_firmware/blob/master/docs/feature_swap_hands.md
  * [x] Try out mousekeys
- * [ ] Use ISO not unicode
+ * [x] Use ISO not unicode
  * [ ] Navigating words and lines
  * [ ] Move SYS to tapdance thumb
  */
@@ -41,9 +84,7 @@ enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   FN,
   SYS,
-  UC_AUML,
-  UC_OUML,
-  UC_ARING,
+  ANSIKEY,
 };
 
 // Fillers to make layering more clear
@@ -68,29 +109,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_QWERTY] = LAYOUT_ortho_4x12(
-    KC_MYTAB,    KC_Q,    KC_W,    KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,     KC_P, UC_ARING, \
-      KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  UC_OUML,  UC_AUML, \
-     KC_RSFT,    KC_Z,    KC_X,    KC_C,    KC_V,      KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,  KC_ANSIKEY,  KC_RSFT, \
-      SH_MON,   RESET, KC_RSFT, KC_LGUI, KC_MYFN, KC_MYSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,  KC_RSFT,  KC_RSFT  \
+    KC_MYTAB,    KC_Q,    KC_W,     KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,       KC_P, KC_ARING, \
+      KC_ESC,    KC_A,    KC_S,     KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,    KC_OUML,  KC_AUML, \
+     KC_RSFT,    KC_Z,    KC_X,     KC_C,    KC_V,      KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,    ANSIKEY,  KC_RSFT, \
+     KC_RSFT,   RESET,  KC_RSFT, KC_LGUI, KC_MYFN,  KC_MYSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,    KC_RSFT,  KC_RSFT  \
 ),
-// #define KC_SWLBRC UC(0x00E5)
+// SH_MON is swap hands
 
 /* Fn
  * ,-----------------------------------------.   ,-----------------------------------------.
  * |   `  |   !  |   @  |   {  |   }  |   &  |   |   *  |   7  |   8  |   9  |   +  |   =  |
  * |------+------+------+------+------+-------   |------+------+------+------+------+------|
- * |   ~  |   ^  |   $  |   (  |   )  |   '  |   |   ;  |   4  |   5  |   6  |   -  |   _  |
+ * |   ~  |   ^  |   $  |   (  |   )  |   '  |   |   "  |   4  |   5  |   6  |   -  |   _  |
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
- * |   |  |   #  |   %  |   [  |   ]  |   "  |   |   :  |   1  |   2  |   3  |   \  |      |
+ * |   |  |   #  |   <  |   [  |   ]  |   >  |   |   %  |   1  |   2  |   3  |   \  |      |
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
  * | RESET| Game |      |      |      |      |   |      |      |   0  |   0  |      |      |
  * `-----------------------------------------'   `-----------------------------------------'
  */
 [_FN] = LAYOUT_ortho_4x12( \
-     KC_GRV,   KC_EXLM,   KC_AT, KC_LCBR, KC_RCBR, KC_AMPR, KC_ASTR,    KC_7,      KC_8,    KC_9, KC_PLUS,  KC_EQL, \
-    KC_TILD,   KC_CIRC,  KC_DLR, KC_LPRN, KC_RPRN, KC_QUOT, KC_SCLN,    KC_4,      KC_5,    KC_6, KC_MINS, KC_UNDS, \
-    KC_PIPE,   KC_HASH, KC_PERC, KC_LBRC, KC_RBRC, KC_DQUO, KC_COLN,    KC_1,      KC_2,    KC_3, KC_BSLS, _______, \
-      RESET, TO(_GAME), _______, _______, _______, _______, _______, _______, KC_MYZERO,    KC_0, _______, _______  \
+        KC_GRV,    KC_EXLM,  KC_SE_AT, KC_SE_LCBR, KC_SE_RCBR, KC_SE_AMPR, KC_SE_ASTR,    KC_7,      KC_8,    KC_9, KC_SE_PLUS,  KC_SE_EQL, \
+    KC_SE_TILD, KC_SE_CIRC, KC_SE_DLR, KC_SE_LPRN, KC_SE_RPRN, KC_SE_QUOT, KC_SE_DQUO,    KC_4,      KC_5,    KC_6, KC_SE_MINS, KC_SE_UNDS, \
+    KC_SE_PIPE,    KC_HASH,  KC_SE_LT, KC_SE_LBRC, KC_SE_RBRC,   KC_SE_GT,    KC_PERC,    KC_1,      KC_2,    KC_3, KC_SE_BSLS,    _______, \
+         RESET,  TO(_GAME),   _______,    _______,    _______,    _______,    _______, _______, KC_MYZERO,    KC_0,    _______,    _______  \
 ),
 
 /* Sys
@@ -165,7 +206,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   uint8_t alt_pressed = get_mods() & ((MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT)));
   // The following five cases map alt hjkl to arrow keys 
   switch (keycode) {
-    case KC_ANSIKEY: {
+    case ANSIKEY: {
       if (record->event.pressed)
         if(shift_pressed) {
           register_code(KC_MINS);
@@ -251,44 +292,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       } 
       return true;
-      break;
-    
-    // The following three cases handle Swedish letters
-    case UC_AUML:
-      if (shift_pressed) {
-        if (record->event.pressed) {
-          SEND_STRING(SS_LALT("00C4"));
-        }
-      } else {
-        if (record->event.pressed) {
-          SEND_STRING(SS_LALT("00E4"));
-        }
-      }
-      return false;
-      break;
-    case UC_OUML:
-      if (shift_pressed) {
-        if (record->event.pressed) {
-          SEND_STRING(SS_LALT("00D6"));
-        }
-      } else {
-        if (record->event.pressed) {
-          SEND_STRING(SS_LALT("00F6"));
-        }
-      }
-      return false;
-      break;
-    case UC_ARING:
-      if (shift_pressed) {
-        if (record->event.pressed) {
-          SEND_STRING(SS_LALT("00C5"));
-        }
-      } else {
-        if (record->event.pressed) {
-          SEND_STRING(SS_LALT("00E5"));
-        }
-      }
-      return false;
       break;
 
     // The following two cases handle layer switching
