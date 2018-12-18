@@ -84,6 +84,8 @@ enum custom_keycodes {
   FN,
   SYS,
   ANSIKEY,
+  ANSICOM,
+  ANSIDOT,
   M_SORT,
   M_ID,
   ANDREE,
@@ -114,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT_ortho_4x12(
     KC_MYTAB,    KC_Q,    KC_W,     KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,       KC_P, KC_ARING, \
       KC_ESC,    KC_A,    KC_S,     KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,    KC_OUML,  KC_AUML, \
-     KC_RSFT,    KC_Z,    KC_X,     KC_C,    KC_V,      KC_B,        KC_N,      KC_M, KC_COMM,  KC_DOT,    ANSIKEY,  KC_RALT, \
+     KC_RSFT,    KC_Z,    KC_X,     KC_C,    KC_V,      KC_B,        KC_N,      KC_M, ANSICOM,  ANSIDOT,    ANSIKEY,  KC_RALT, \
      KC_RSFT,   RESET,  KC_RSFT, KC_LGUI, KC_MYFN,  KC_MYSFT,      KC_SPC,  KC_MYALT, KC_RCTL, KC_RSFT,    KC_RSFT,  KC_RSFT  \
 ),
 // SH_MON is swap hands
@@ -123,17 +125,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.   ,-----------------------------------------.
  * |   `  |   !  |   @  |   {  |   }  |   &  |   |   *  |   7  |   8  |   9  |   +  |   =  |
  * |------+------+------+------+------+-------   |------+------+------+------+------+------|
- * |   ~  |   ^  |   $  |   (  |   )  |   '  |   |   "  |   4  |   5  |   6  |   -  |   _  |
+ * |   ~  |   ^  |   $  |   (  |   )  |   '  |   |   ;  |   4  |   5  |   6  |   -  |   _  |
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
- * |   |  |   #  |   <  |   [  |   ]  |   >  |   |   %  |   1  |   2  |   3  |   \  |      |
+ * |   |  |   #  |   %  |   [  |   ]  |   "  |   |   :  |   1  |   2  |   3  |   \  |      |
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
  * | RESET| Game |      |      |      |      |   |      |      |   0  |   0  |      |      |
  * `-----------------------------------------'   `-----------------------------------------'
  */
 [_FN] = LAYOUT_ortho_4x12( \
     KC_SE_GRAV,    KC_EXLM,  KC_SE_AT, KC_SE_LCBR, KC_SE_RCBR, KC_SE_AMPR, KC_SE_ASTR,    KC_7,      KC_8,    KC_9, KC_SE_PLUS,  KC_SE_EQL, \
-    KC_SE_TILD, KC_SE_CIRC, KC_SE_DLR, KC_SE_LPRN, KC_SE_RPRN, KC_SE_QUOT, KC_SE_DQUO,    KC_4,      KC_5,    KC_6, KC_SE_MINS, KC_SE_UNDS, \
-    KC_SE_PIPE,    KC_HASH,  KC_SE_LT, KC_SE_LBRC, KC_SE_RBRC,   KC_SE_GT,    KC_PERC,    KC_1,      KC_2,    KC_3, KC_SE_BSLS,    _______, \
+    KC_SE_TILD, KC_SE_CIRC, KC_SE_DLR, KC_SE_LPRN, KC_SE_RPRN, KC_SE_QUOT, KC_SE_SCLN,    KC_4,      KC_5,    KC_6, KC_SE_MINS, KC_SE_UNDS, \
+    KC_SE_PIPE,    KC_HASH,   KC_PERC, KC_SE_LBRC, KC_SE_RBRC, KC_SE_DQUO, KC_SE_COLN,    KC_1,      KC_2,    KC_3, KC_SE_BSLS,    _______, \
          RESET,  TO(_GAME),   _______,    _______,    _______,    _______,    _______, _______, KC_MYZERO,    KC_0,    _______,    _______  \
 ),
 
@@ -223,6 +225,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           unregister_code(KC_MINS);
         } else {
           unregister_code(KC_7);
+        }
+      return false;
+    }
+    case ANSICOM: {
+      if (record->event.pressed)
+        if(shift_pressed) {
+          unregister_code(KC_LSHIFT);
+          register_code(KC_GRV);
+          register_code(KC_LSHIFT);
+        } else {
+          register_code(KC_COMM);
+        }
+      else
+        if(shift_pressed) {
+          unregister_code(KC_GRV);
+        } else {
+          unregister_code(KC_COMM);
+        }
+      return false;
+    }
+    case ANSIDOT: {
+      if (record->event.pressed)
+        if(shift_pressed) {
+          register_code(KC_GRV);
+        } else {
+          register_code(KC_DOT);
+        }
+      else
+        if(shift_pressed) {
+          unregister_code(KC_GRV);
+        } else {
+          unregister_code(KC_DOT);
         }
       return false;
     }
