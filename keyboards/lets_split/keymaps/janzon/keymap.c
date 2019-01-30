@@ -15,6 +15,7 @@ extern keymap_config_t keymap_config;
 #define KC_MYSFT MT(MOD_RSFT, KC_ENT)
 #define KC_MYSYM LT(_SYM, KC_TAB)
 #define KC_MYTAB LT(_SYS, KC_ESC)
+#define KC_MYBSPC MT(MOD_RCTL, KC_BSPC)
 #define KC_GMESC LT(_GFN, KC_ESC)
 
 #define KC_ARING KC_LBRC
@@ -127,9 +128,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT_ortho_4x12(
     KC_MYTAB,    KC_Q,    KC_W,     KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,       KC_P, KC_ARING, \
-      KC_ESC,  KC_MYA,  KC_MYS,   KC_MYD,  KC_MYF,      KC_G,        KC_H,    KC_MYJ,  KC_MYK,  KC_MYL,  KC_MYOUML,  KC_AUML, \
+      KC_ESC,    KC_A,    KC_S,     KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  KC_MYOUML,  KC_AUML, \
      KC_RSFT,    KC_Z,    KC_X,     KC_C,    KC_V,      KC_B,        KC_N,      KC_M, ANSICOM,  ANSIDOT,   ANSIKEY, MO(_SYS), \
-     KC_RSFT,   RESET,  KC_RSFT, KC_RSFT, KC_MYSYM,  KC_BSPC,      KC_SPC,  KC_MYSFT, KC_RSFT,  KC_RSFT,    KC_RSFT,  KC_RSFT  \
+     KC_RSFT,   RESET, KC_RSFT, KC_LGUI, KC_MYSYM, KC_MYBSPC,      KC_SPC,  KC_MYSFT, KC_LALT,  KC_RSFT,    KC_RSFT,  KC_RSFT  \
 ),
 // SH_MON is swap hands
 
