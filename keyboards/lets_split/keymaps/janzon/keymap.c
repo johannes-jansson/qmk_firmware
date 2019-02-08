@@ -12,11 +12,13 @@ extern keymap_config_t keymap_config;
 #define KC_SWLBRC LALT(KC_LBRC)
 #define KC_SWQUOT LALT(KC_QUOT)
 #define KC_SWSCLN LALT(KC_SCLN)
-#define KC_MYSFT MT(MOD_RSFT, KC_ENT)
+#define KC_MYSFT MT(MOD_LSFT, KC_ENT)
 #define KC_MYSYM LT(_SYM, KC_TAB)
+#define KC_MYALT MT(MOD_RALT, KC_TAB)
 #define KC_MYTAB LT(_SYS, KC_ESC)
 #define KC_MYBSPC MT(MOD_RCTL, KC_BSPC)
 #define KC_GMESC LT(_GFN, KC_ESC)
+#define KC_WIN_BSLS RALT(KC_MINS)
 
 #define KC_ARING KC_LBRC
 #define KC_OUML KC_SCLN
@@ -61,7 +63,7 @@ extern keymap_config_t keymap_config;
 #define KC_SE_UNDS S(KC_SLSH)
 
 #define KC_MYF MT(MOD_LSFT, KC_F)
-#define KC_MYJ MT(MOD_RSFT, KC_J)
+#define KC_MYJ MT(MOD_LSFT, KC_J)
 #define KC_MYD MT(MOD_LCTL, KC_D)
 #define KC_MYK MT(MOD_RCTL, KC_K)
 #define KC_MYS MT(MOD_LALT, KC_S)
@@ -82,7 +84,7 @@ extern keymap_config_t keymap_config;
  * [x] Look at swap hands https://github.com/qmk/qmk_firmware/blob/master/docs/feature_swap_hands.md
  * [x] Try out mousekeys
  * [x] Use ISO not unicode
- * [ ] Navigating words and lines
+ * [x] Navigating words and lines
  * [ ] Move SYS to tapdance thumb
  */
 
@@ -111,26 +113,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   |   N  |   M  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
- * | Shift| Shift| Shift| Shift| Tab  | Bspc |   | Space| Enter| Shift| Shift| Shift| Shift|
+ * | Shift| Shift| Shift| Cmd  | Tab  | Bspc |   | Space| Enter| Alt  | Shift| Shift| Shift|
  * `-----------------------------------------'   `-----------------------------------------'
  *
  * Enter becomes shift when held down
  * Tab goes to SYM layer when held down
  * , . / becomes < > ? when shift is pressed
- * Also, hjkl becomes arrows when right cmd (Ö) is pressed
- *
- * The home row is tap modifiers with:
- * |------+------+------+------+------+-------   |------+------+------+------+------+------|
- * |      | Cmd  | Alt  | Ctrl | Shift|      |   |      | Shift| Ctrl | Alt  | Cmd  |      |
- * |------+------+------+------+------+------|   |------+------+------+------+------+------|
+ * Ö becomes right cmd when held down
+ * HJKL becomes arrows when right cmd (Ö) is pressed
  *
  */
 
 [_QWERTY] = LAYOUT_ortho_4x12(
     KC_MYTAB,    KC_Q,    KC_W,     KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,       KC_P, KC_ARING, \
       KC_ESC,    KC_A,    KC_S,     KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  KC_MYOUML,  KC_AUML, \
-     KC_RSFT,    KC_Z,    KC_X,     KC_C,    KC_V,      KC_B,        KC_N,      KC_M, ANSICOM,  ANSIDOT,   ANSIKEY, MO(_SYS), \
-     KC_RSFT,   RESET, KC_RSFT, KC_LGUI, KC_MYSYM, KC_MYBSPC,      KC_SPC,  KC_MYSFT, KC_LALT,  KC_RSFT,    KC_RSFT,  KC_RSFT  \
+     KC_LSFT,    KC_Z,    KC_X,     KC_C,    KC_V,      KC_B,        KC_N,      KC_M, ANSICOM,  ANSIDOT,   ANSIKEY, MO(_SYS), \
+     KC_LSFT,   RESET, KC_LSFT, KC_LGUI, KC_MYSYM, KC_MYBSPC,      KC_SPC,  KC_MYSFT,KC_MYALT,  KC_LSFT,    KC_LSFT,  KC_LSFT  \
 ),
 // SH_MON is swap hands
 
@@ -140,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------   |------+------+------+------+------+------|
  * |   ~  |   ^  |   $  |   (  |   )  |   '  |   |   ;  |   4  |   5  |   6  |   -  |   _  |
  * |------+------+------+------+------+------|   |------+------+------+------+------+------|
- * |   |  |   #  |   %  |   [  |   ]  |   "  |   |   :  |   1  |   2  |   3  |   \  |      |
+ * |   |  |   #  |   %  |   [  |   ]  |   "  |   |   :  |   1  |   2  |   3  |   \  |  \   | but windows
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
  * | RESET| Game |      |      |      |      |   |      |      |   0  |      |      |      |
  * `-----------------------------------------'   `-----------------------------------------'
@@ -148,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_SYM] = LAYOUT_ortho_4x12( \
     KC_SE_GRAV,    KC_EXLM,  KC_SE_AT, KC_SE_LCBR, KC_SE_RCBR, KC_SE_AMPR, KC_SE_ASTR,    KC_7,      KC_8,    KC_9, KC_SE_PLUS,  KC_SE_EQL, \
     KC_SE_TILD, KC_SE_CIRC, KC_SE_DLR, KC_SE_LPRN, KC_SE_RPRN, KC_SE_QUOT, KC_SE_SCLN,    KC_4,      KC_5,    KC_6, KC_SE_MINS, KC_SE_UNDS, \
-    KC_SE_PIPE,    KC_HASH,   KC_PERC, KC_SE_LBRC, KC_SE_RBRC, KC_SE_DQUO, KC_SE_COLN,    KC_1,      KC_2,    KC_3, KC_SE_BSLS,    _______, \
+    KC_SE_PIPE,    KC_HASH,   KC_PERC, KC_SE_LBRC, KC_SE_RBRC, KC_SE_DQUO, KC_SE_COLN,    KC_1,      KC_2,    KC_3, KC_SE_BSLS,KC_WIN_BSLS, \
          RESET,  TO(_GAME),   _______,    _______,    _______,    _______,    _______, _______,      KC_0, _______,    _______,    _______  \
 ),
 
