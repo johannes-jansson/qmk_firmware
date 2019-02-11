@@ -15,6 +15,7 @@ extern keymap_config_t keymap_config;
 #define KC_MYSFT MT(MOD_LSFT, KC_ENT)
 #define KC_MYSYM LT(_SYM, KC_TAB)
 #define KC_MYALT MT(MOD_RALT, KC_TAB)
+#define KC_MYGUI MT(MOD_LGUI, KC_F3)
 #define KC_MYTAB LT(_SYS, KC_ESC)
 #define KC_MYBSPC MT(MOD_RCTL, KC_BSPC)
 #define KC_GMESC LT(_GFN, KC_ESC)
@@ -62,13 +63,13 @@ extern keymap_config_t keymap_config;
 #define KC_SE_MINS KC_SLSH
 #define KC_SE_UNDS S(KC_SLSH)
 
-#define KC_MYF MT(MOD_LSFT, KC_F)
-#define KC_MYJ MT(MOD_LSFT, KC_J)
-#define KC_MYD MT(MOD_LCTL, KC_D)
-#define KC_MYK MT(MOD_RCTL, KC_K)
-#define KC_MYS MT(MOD_LALT, KC_S)
-#define KC_MYL MT(MOD_RALT, KC_L)
-#define KC_MYA MT(MOD_LGUI, KC_A)
+/* #define KC_MYF MT(MOD_LSFT, KC_F) */
+/* #define KC_MYJ MT(MOD_LSFT, KC_J) */
+/* #define KC_MYD MT(MOD_LCTL, KC_D) */
+/* #define KC_MYK MT(MOD_RCTL, KC_K) */
+/* #define KC_MYS MT(MOD_LALT, KC_S) */
+/* #define KC_MYL MT(MOD_RALT, KC_L) */
+/* #define KC_MYA MT(MOD_LGUI, KC_A) */
 #define KC_MYOUML MT(MOD_RGUI, KC_OUML)
 
 
@@ -85,6 +86,7 @@ extern keymap_config_t keymap_config;
  * [x] Try out mousekeys
  * [x] Use ISO not unicode
  * [x] Navigating words and lines
+ * [ ] Better solution for arrows
  * [ ] Move SYS to tapdance thumb
  */
 
@@ -114,10 +116,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   |   N  |   M  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+   |------+------+------+------+------+------|
  * | Shift| Shift| Shift| Cmd  | Tab  | Bspc |   | Space| Enter| Alt  | Shift| Shift| Shift|
+ * |      |      |      | (F3) | SYM  | Ctrl |   |      | Shift| (Tab)|      |      |      |
  * `-----------------------------------------'   `-----------------------------------------'
  *
  * Enter becomes shift when held down
  * Tab goes to SYM layer when held down
+ * Alt becomes Tab when tapped (only used for Cmd + Tab)
  * , . / becomes < > ? when shift is pressed
  * Ö becomes right cmd when held down
  * HJKL becomes arrows when right cmd (Ö) is pressed
@@ -125,10 +129,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_QWERTY] = LAYOUT_ortho_4x12(
-    KC_MYTAB,    KC_Q,    KC_W,     KC_E,    KC_R,      KC_T,        KC_Y,      KC_U,    KC_I,    KC_O,       KC_P, KC_ARING, \
-      KC_ESC,    KC_A,    KC_S,     KC_D,    KC_F,      KC_G,        KC_H,      KC_J,    KC_K,    KC_L,  KC_MYOUML,  KC_AUML, \
-     KC_LSFT,    KC_Z,    KC_X,     KC_C,    KC_V,      KC_B,        KC_N,      KC_M, ANSICOM,  ANSIDOT,   ANSIKEY, MO(_SYS), \
-     KC_LSFT,   RESET, KC_LSFT, KC_LGUI, KC_MYSYM, KC_MYBSPC,      KC_SPC,  KC_MYSFT,KC_MYALT,  KC_LSFT,    KC_LSFT,  KC_LSFT  \
+    KC_MYTAB,    KC_Q,    KC_W,     KC_E,    KC_R,      KC_T,    KC_Y,     KC_U,     KC_I,    KC_O,      KC_P, KC_ARING, \
+      KC_ESC,    KC_A,    KC_S,     KC_D,    KC_F,      KC_G,    KC_H,     KC_J,     KC_K,    KC_L, KC_MYOUML,  KC_AUML, \
+     KC_LSFT,    KC_Z,    KC_X,     KC_C,    KC_V,      KC_B,    KC_N,     KC_M,  ANSICOM, ANSIDOT,   ANSIKEY,  KC_RGUI, \
+     KC_LSFT,   RESET, KC_LSFT, KC_MYGUI, KC_MYSYM, KC_MYBSPC, KC_SPC, KC_MYSFT, KC_MYALT, KC_LSFT,   KC_LSFT,  KC_LSFT  \
 ),
 // SH_MON is swap hands
 
