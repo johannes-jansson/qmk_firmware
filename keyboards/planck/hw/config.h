@@ -24,8 +24,8 @@
 #undef MATRIX_ROWS
 #undef MATRIX_COLS
 /* key matrix size */
-#define MATRIX_ROWS 8
-#define MATRIX_COLS 6
+#define MATRIX_ROWS 4
+#define MATRIX_COLS 12
 
 /*
  * Keyboard Matrix Assignments
@@ -43,9 +43,9 @@
  * #define UNUSED_PINS
  */
 
-#define NUMBER_OF_ENCODERS 1
-#define ENCODERS_PAD_A { B12 }
-#define ENCODERS_PAD_B { B13 }
+#define NUMBER_OF_ENCODERS 0
+/* #define ENCODERS_PAD_A { B12 } */
+/* #define ENCODERS_PAD_B { B13 } */
 
 #define MUSIC_MAP
 #undef AUDIO_VOICES
@@ -121,7 +121,7 @@
 /* override number of MIDI tone keycodes (each octave adds 12 keycodes and allocates 12 bytes) */
 //#define MIDI_TONE_KEYCODE_OCTAVES 1
 
-#define WS2812_LED_N 2
+#define WS2812_LED_N 0
 #define RGBLED_NUM WS2812_LED_N
 #define WS2812_TIM_N 2
 #define WS2812_TIM_CH 2
