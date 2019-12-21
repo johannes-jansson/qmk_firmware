@@ -30,4 +30,4 @@
 		{ K30, K31, K32, K33, K34, K35, K36, K37, K38, K39, K3A, K3B} \
 	}
 
-#define LAYOUT_ortho_4x12 LAYOUT
+/* #define LAYOUT_ortho_4x12 LAYOUT */

@@ -26,12 +26,14 @@
 #define PRODUCT         Proton C
 #define DESCRIPTION     A compact ortholinear keyboard
 
+#define LAYOUT_ortho_4x12 LAYOUT
+
 /* key matrix size */
 #define MATRIX_ROWS 4
 #define MATRIX_COLS 12
 
 #define MATRIX_ROW_PINS { A2, A1, A0, B8 }
-#define MATRIX_COL_PINS { B7, B6, B5, B4, B3, B2, B1, B0, B9, B15, B14, B13 }
+#define MATRIX_COL_PINS { B7, B6, B5, B4, B3, B2, B1, B0, B9, B15, B14, B13 } // A4 was B5
 #define UNUSED_PINS { B10, B11, B12, A14, A13, A15, A8, A7, A6, A5, A4 }
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */

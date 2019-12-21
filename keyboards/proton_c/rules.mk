@@ -15,3 +15,5 @@ NKRO_ENABLE = yes     # USB Nkey Rollover
 AUDIO_ENABLE = yes
 RGBLIGHT_ENABLE = no
 # SERIAL_LINK_ENABLE = yes
+
+LAYOUTS += ortho_4x12
